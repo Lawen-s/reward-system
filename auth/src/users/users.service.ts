@@ -13,7 +13,12 @@ export class UsersService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { email, password, name } = createUserDto;
     const salt = await bcrypt.genSalt();
-    const createdUser = new this.userModel({ email, password, name });
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const createdUser = new this.userModel({
+      email,
+      password: hashedPassword,
+      name,
+    });
     return createdUser.save();
   }
 
@@ -31,14 +36,21 @@ export class UsersService {
 
   async login(loginDto: LoginDto): Promise<User> {
     const { email, password } = loginDto;
-    const user = await this.userModel.findOne({ email, password });
+    const user = await this.userModel.findOne({ email }).select("+password");
     if (!user) {
       throw new UnauthorizedException("Invalid credentials");
     }
-    // const isPasswordValid = await bcrypt.compare(password, user.password);
-    // if (!isPasswordValid) {
-    //   throw new UnauthorizedException("Invalid credentials");
-    // }
+    const isPasswordValid = await this.validatePassword(
+      password,
+      user.password
+    );
+    if (!isPasswordValid) {
+      throw new UnauthorizedException("Invalid credentials");
+    }
     return user;
+  }
+
+  private async validatePassword(password: string, userPassword: string) {
+    return bcrypt.compare(password, userPassword);
   }
 }
