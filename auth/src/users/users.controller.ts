@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Get, Param } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Req,
+  UnauthorizedException,
+  Patch,
+} from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import {
@@ -7,6 +15,13 @@ import {
   ApiOkResponse,
 } from "@nestjs/swagger";
 import { LoginDto } from "./dto/login.dto";
+import { UpdateUserDto } from "./dto/update.dto";
+
+interface RequestWithUserId extends Request {
+  headers: Request["headers"] & {
+    "x-user-id"?: string; // 선택적으로 정의
+  };
+}
 
 @Controller("users")
 export class UsersController {
@@ -19,18 +34,15 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  @ApiOperation({ summary: "모든 유저 조회" })
-  @ApiOkResponse({ description: "모든 유저 조회 성공" })
-  async findAll() {
-    return this.usersService.findAll();
-  }
-
-  @Get(":id")
+  @Get("me")
   @ApiOperation({ summary: "유저 조회" })
   @ApiOkResponse({ description: "유저 조회 성공" })
-  async findOne(@Param("id") id: string) {
-    return this.usersService.findOne(id);
+  async findOne(@Req() req: RequestWithUserId) {
+    const userId = req.headers["x-user-id"];
+    if (!userId) {
+      throw new UnauthorizedException("User ID is missing in headers");
+    }
+    return this.usersService.findOne(userId);
   }
 
   @Post("login")
@@ -38,5 +50,19 @@ export class UsersController {
   @ApiOkResponse({ description: "로그인 성공" })
   async login(@Body() loginDto: LoginDto) {
     return this.usersService.login(loginDto);
+  }
+
+  @Patch("update")
+  @ApiOperation({ summary: "유저 정보 수정" })
+  @ApiOkResponse({ description: "유저 정보 수정 성공" })
+  async update(@Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(updateUserDto);
+  }
+
+  @Get("all")
+  @ApiOperation({ summary: "모든 유저 조회" })
+  @ApiOkResponse({ description: "모든 유저 조회 성공" })
+  async findAll() {
+    return this.usersService.findAll();
   }
 }

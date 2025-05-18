@@ -5,10 +5,16 @@ import { User, UserDocument } from "./schema/user.schema";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginDto } from "./dto/login.dto";
 import * as bcrypt from "bcrypt";
+import { TokenService } from "token/token.service";
+import { UpdateUserDto } from "./dto/update.dto";
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name)
+    private userModel: Model<UserDocument>,
+    private readonly tokenService: TokenService
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { email, password, name } = createUserDto;
@@ -22,10 +28,6 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
-  }
-
   async findOne(id: string): Promise<User> {
     return this.userModel.findById(id).exec();
   }
@@ -34,7 +36,7 @@ export class UsersService {
     return this.userModel.findOne({ email }).exec();
   }
 
-  async login(loginDto: LoginDto): Promise<User> {
+  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const { email, password } = loginDto;
     const user = await this.userModel.findOne({ email }).select("+password");
     if (!user) {
@@ -47,7 +49,20 @@ export class UsersService {
     if (!isPasswordValid) {
       throw new UnauthorizedException("Invalid credentials");
     }
-    return user;
+    const accessToken = await this.tokenService.createAccessToken(
+      user.id,
+      user.role
+    );
+    return { accessToken };
+  }
+
+  async update(updateUserDto: UpdateUserDto) {
+    const { id, role } = updateUserDto;
+    return this.userModel.findByIdAndUpdate(id, { role }, { new: true });
+  }
+
+  async findAll() {
+    return this.userModel.find().exec();
   }
 
   private async validatePassword(password: string, userPassword: string) {

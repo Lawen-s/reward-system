@@ -7,6 +7,7 @@ import { config } from "./common/config";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { join } from "path";
+import { TokenModule } from "./token/token.module";
 
 @Module({
   imports: [
@@ -22,6 +23,11 @@ import { join } from "path";
         MONGO_URI: Joi.string().required(),
         MONGO_DB: Joi.string().required(),
         MONGO_AUTH_SOURCE: Joi.string().required(),
+        JWT_ISSUER: Joi.string().required(),
+        JWT_AUDIENCE: Joi.string().required(),
+        JWS_KEY_BASE64: Joi.string().required(),
+        JWS_ALGORITHM: Joi.string().required(),
+        JWS_EXPIRATION: Joi.string().required(),
       }),
     }),
     MongooseModule.forRootAsync({
@@ -34,6 +40,7 @@ import { join } from "path";
       inject: [ConfigService],
     }),
     UsersModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

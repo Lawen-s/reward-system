@@ -23,7 +23,7 @@ export class User {
   @Prop({ required: true, select: false })
   password: string;
 
-  @Prop({ default: "user" })
+  @Prop({ default: "USER" })
   role: string;
 
   @Prop({ default: false })
