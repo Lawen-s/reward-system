@@ -7,16 +7,22 @@ import { LoginDto } from "./dto/login.dto";
 import * as bcrypt from "bcrypt";
 import { TokenService } from "../token/token.service";
 import { UpdateUserDto } from "./dto/update.dto";
+import { UserEventProgressService } from "src/user-event-progress/user-event-progress.service";
 
 @Injectable()
 export class UsersService {
+  private readonly LOGIN_EVENT_ID = "682b76939bc027c1184d1f2f";
+  private readonly FIRST = 1;
   constructor(
     @InjectModel(Users.name)
     private userModel: Model<UsersDocument>,
-    private readonly tokenService: TokenService
+    private readonly tokenService: TokenService,
+    private readonly userEventProgressService: UserEventProgressService
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<Users> {
+  async create(
+    createUserDto: CreateUserDto
+  ): Promise<{ id: string; email: string; name: string }> {
     const { email, password, name } = createUserDto;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -25,15 +31,21 @@ export class UsersService {
       password: hashedPassword,
       name,
     });
-    return createdUser.save();
+    return createdUser.save().then((user) => {
+      return {
+        id: user._id.toString(),
+        email: user.email,
+        name: user.name,
+      };
+    });
   }
 
   async findOne(id: string): Promise<Users> {
-    return this.userModel.findById(id).exec();
+    return await this.userModel.findById(id).exec();
   }
 
   async findByEmail(email: string): Promise<Users> {
-    return this.userModel.findOne({ email }).exec();
+    return await this.userModel.findOne({ email }).exec();
   }
 
   async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
@@ -53,16 +65,26 @@ export class UsersService {
       user.id,
       user.role
     );
+
+    await this.userModel.findByIdAndUpdate(user.id, {
+      lastLoginAt: new Date(),
+    });
+
+    await this.userEventProgressService.checkAndHandleLoginEvent(
+      user.id,
+      user.lastLoginAt
+    );
+
     return { accessToken };
   }
 
   async update(updateUserDto: UpdateUserDto) {
     const { id, role } = updateUserDto;
-    return this.userModel.findByIdAndUpdate(id, { role }, { new: true });
+    return await this.userModel.findByIdAndUpdate(id, { role }, { new: true });
   }
 
   async findAll() {
-    return this.userModel.find().exec();
+    return await this.userModel.find().exec();
   }
 
   private async validatePassword(password: string, userPassword: string) {

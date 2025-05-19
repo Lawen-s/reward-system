@@ -5,7 +5,7 @@ export type EventRewardDocument = HydratedDocument<EventReward>;
 
 @Schema({
   timestamps: true,
-  collection: "event_rewards",
+  collection: "event_reward",
   toJSON: {
     transform: function (doc, ret) {
       delete ret.__v;

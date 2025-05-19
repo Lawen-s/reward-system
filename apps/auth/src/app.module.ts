@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as Joi from "joi";
 import { join } from "path";
 import { TokenModule } from "./token/token.module";
+import { UserEventProgressModule } from "./user-event-progress/user-event-progress.module";
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { TokenModule } from "./token/token.module";
     }),
     UsersModule,
     TokenModule,
+    UserEventProgressModule,
   ],
   controllers: [AppController],
   providers: [AppService],

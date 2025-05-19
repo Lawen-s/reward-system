@@ -10,22 +10,29 @@ export type UsersDocument = HydratedDocument<Users>;
     transform: function (doc, ret) {
       delete ret.__v;
       delete ret.password;
+      delete ret.isDeleted;
+      delete ret.deletedAt;
+      delete ret.createdAt;
+      delete ret.updatedAt;
       return ret;
     },
   },
 })
 export class Users {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true, unique: true, type: String })
   email: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, type: String })
   name: string;
 
-  @Prop({ required: true, select: false })
+  @Prop({ required: true, select: false, type: String })
   password: string;
 
-  @Prop({ default: "USER" })
+  @Prop({ default: "USER", type: String })
   role: string;
+
+  @Prop({ type: Date, default: null })
+  lastLoginAt: Date;
 
   @Prop({ default: false })
   isDeleted: boolean;

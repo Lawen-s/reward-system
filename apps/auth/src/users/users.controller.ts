@@ -42,27 +42,27 @@ export class UsersController {
     if (!userId) {
       throw new UnauthorizedException("User ID is missing in headers");
     }
-    return this.usersService.findOne(userId);
+    return await this.usersService.findOne(userId);
   }
 
   @Post("login")
   @ApiOperation({ summary: "로그인" })
   @ApiOkResponse({ description: "로그인 성공" })
   async login(@Body() loginDto: LoginDto) {
-    return this.usersService.login(loginDto);
+    return await this.usersService.login(loginDto);
   }
 
   @Patch("update")
   @ApiOperation({ summary: "유저 정보 수정" })
   @ApiOkResponse({ description: "유저 정보 수정 성공" })
   async update(@Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(updateUserDto);
+    return await this.usersService.update(updateUserDto);
   }
 
   @Get("all")
   @ApiOperation({ summary: "모든 유저 조회" })
   @ApiOkResponse({ description: "모든 유저 조회 성공" })
   async findAll() {
-    return this.usersService.findAll();
+    return await this.usersService.findAll();
   }
 }
