@@ -1,22 +1,22 @@
 import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User, UserDocument } from "./schema/user.schema";
+import { Users, UsersDocument } from "./schema/users.schema";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginDto } from "./dto/login.dto";
 import * as bcrypt from "bcrypt";
-import { TokenService } from "token/token.service";
+import { TokenService } from "../token/token.service";
 import { UpdateUserDto } from "./dto/update.dto";
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel(User.name)
-    private userModel: Model<UserDocument>,
+    @InjectModel(Users.name)
+    private userModel: Model<UsersDocument>,
     private readonly tokenService: TokenService
   ) {}
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<Users> {
     const { email, password, name } = createUserDto;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -28,11 +28,11 @@ export class UsersService {
     return createdUser.save();
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string): Promise<Users> {
     return this.userModel.findById(id).exec();
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<Users> {
     return this.userModel.findOne({ email }).exec();
   }
 

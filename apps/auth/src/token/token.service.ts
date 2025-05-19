@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
-import { JwsConfig, JwtConfig } from "common/config";
+import { JwsConfig, JwtConfig } from "../common/config";
 import * as jose from "jose";
 
 @Injectable()

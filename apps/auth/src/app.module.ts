@@ -13,8 +13,8 @@ import { TokenModule } from "./token/token.module";
   imports: [
     ConfigModule.forRoot({
       envFilePath: [
-        join(__dirname, "..", "..", ".env.base"), // 공통 설정 (먼저 읽힘)
-        join(__dirname, "..", ".env"), // 서비스 설정 (덮어씀)
+        join(__dirname, "..", "..", "..", ".env.base"),
+        join(__dirname, "..", ".env"),
       ],
       isGlobal: true,
       load: [config],
