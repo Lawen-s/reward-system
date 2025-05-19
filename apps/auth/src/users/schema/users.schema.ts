@@ -5,6 +5,7 @@ export type UsersDocument = HydratedDocument<Users>;
 
 @Schema({
   timestamps: true,
+  collection: "users",
   toJSON: {
     transform: function (doc, ret) {
       delete ret.__v;

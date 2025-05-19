@@ -1,14 +1,13 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { CreateEventDto } from "./dto/create-event.dto";
+import { EventsService } from "./events.service";
 
 @Controller("events")
 export class EventsController {
-  @Get()
-  getEventList() {
-    return "Hello World";
-  }
+  constructor(private readonly eventsService: EventsService) {}
 
-  @Get(":id")
-  getEvent(@Param("id") id: string) {
-    return "Hello World";
+  @Post()
+  createEvent(@Body() createEventDto: CreateEventDto) {
+    return this.eventsService.createEvent(createEventDto);
   }
 }
