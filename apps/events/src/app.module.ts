@@ -7,7 +7,8 @@ import { join } from "path";
 import { config } from "./common/config";
 import { EventsModule } from "./events/events.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { RewardsModule } from "./events/rewards/rewards.module";
+import { RewardsModule } from "./rewards/rewards.module";
+import { EventRewardModule } from "./event-reward/event-reward.module";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { RewardsModule } from "./events/rewards/rewards.module";
     }),
     EventsModule,
     RewardsModule,
+    EventRewardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

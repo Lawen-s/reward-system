@@ -10,5 +10,6 @@ import { RewardsService } from "./rewards.service";
   ],
   controllers: [RewardsController],
   providers: [RewardsService],
+  exports: [RewardsService],
 })
 export class RewardsModule {}
