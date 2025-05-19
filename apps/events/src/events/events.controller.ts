@@ -10,4 +10,14 @@ export class EventsController {
   createEvent(@Body() createEventDto: CreateEventDto) {
     return this.eventsService.createEvent(createEventDto);
   }
+
+  @Get()
+  getEvents() {
+    return this.eventsService.getEvents();
+  }
+
+  @Get(":id")
+  getEventById(@Param("id") id: string) {
+    return this.eventsService.getEventById(id);
+  }
 }

@@ -7,6 +7,7 @@ import { join } from "path";
 import { config } from "./common/config";
 import { EventsModule } from "./events/events.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { RewardsModule } from "./events/rewards/rewards.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
       inject: [ConfigService],
     }),
     EventsModule,
+    RewardsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,31 +10,27 @@ export type RewardsDocument = HydratedDocument<Rewards>;
   toJSON: {
     transform: function (doc, ret) {
       delete ret.__v;
+      delete ret.createdAt;
+      delete ret.updatedAt;
       return ret;
     },
   },
 })
 export class Rewards {
-  @Prop({ required: true })
+  @Prop({ required: true, comment: "보상 이름" })
   title: string;
 
-  @Prop({ required: true })
+  @Prop({ required: true, comment: "보상 설명" })
   description: string;
 
-  @Prop({ required: true, select: false, default: false })
-  isActive: boolean;
-
-  @Prop({ default: null })
+  @Prop({ default: null, comment: "종료일" })
   endAt: Date;
 
-  @Prop({ default: null })
+  @Prop({ default: null, comment: "시작일" })
   startAt: Date;
 
-  @Prop({ required: true, enum: RewardType })
+  @Prop({ required: true, enum: RewardType, comment: "보상 타입" })
   type: string;
-
-  @Prop({ type: Object, default: {} })
-  meta: Record<string, any>;
 }
 
 export const RewardsSchema = SchemaFactory.createForClass(Rewards);

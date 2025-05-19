@@ -15,4 +15,14 @@ export class EventsService {
     const event = await this.eventModel.create(createEventDto);
     return event;
   }
+
+  async getEvents() {
+    const events = await this.eventModel.find();
+    return events;
+  }
+
+  async getEventById(id: string) {
+    const event = await this.eventModel.findById(id);
+    return event;
+  }
 }
