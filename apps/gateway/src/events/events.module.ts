@@ -5,7 +5,7 @@ import { EventController } from "./events.controller";
 
 @Module({
   imports: [HttpModule],
-  providers: [EventController],
-  exports: [JwtStrategy],
+  providers: [JwtStrategy],
+  controllers: [EventController],
 })
 export class EventModule {}

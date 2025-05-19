@@ -6,6 +6,9 @@ import { config } from "./common/config";
 import { ConfigModule } from "@nestjs/config";
 import * as Joi from "joi";
 import { AuthModule } from "./auth/auth.module";
+import { EventModule } from "./events/events.module";
+import { RewardsModule } from "./rewards/rewards.module";
+import { EventRewardModule } from "./event-reward/event-reward.module";
 
 @Module({
   imports: [
@@ -26,6 +29,9 @@ import { AuthModule } from "./auth/auth.module";
       }),
     }),
     AuthModule,
+    EventModule,
+    RewardsModule,
+    EventRewardModule,
   ],
   controllers: [AppController],
   providers: [AppService],

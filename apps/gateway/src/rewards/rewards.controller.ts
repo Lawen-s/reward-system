@@ -1,44 +1,43 @@
 import { HttpService } from "@nestjs/axios";
 import {
+  Body,
   Controller,
   Get,
   Param,
   Post,
-  SetMetadata,
   UseGuards,
-  Body,
+  SetMetadata,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { firstValueFrom } from "rxjs";
 import { RolesGuard } from "src/common/roles.guard";
+import { firstValueFrom } from "rxjs";
 
-@Controller("events")
 @UseGuards(AuthGuard("user"), RolesGuard)
 @SetMetadata("roles", ["ADMIN", "OPERATOR"])
-export class EventController {
+@Controller("rewards")
+export class RewardsController {
   constructor(private readonly httpService: HttpService) {}
 
   @Get()
-  async getEvents() {
-    console.log("getEvents");
+  async getRewards() {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3002/events")
+      this.httpService.get("http://localhost:3002/rewards")
     );
     return response.data;
   }
 
   @Get(":id")
-  async getEventById(@Param("id") id: string) {
+  async getRewardById(@Param("id") id: string) {
     const response = await firstValueFrom(
-      this.httpService.get(`http://localhost:3002/events/${id}`)
+      this.httpService.get(`http://localhost:3002/rewards/${id}`)
     );
     return response.data;
   }
 
   @Post()
-  async createEvent(@Body() body: any) {
+  async createReward(@Body() body: any) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3002/events", body)
+      this.httpService.post("http://localhost:3002/rewards", body)
     );
     return response.data;
   }
