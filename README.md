@@ -13,21 +13,27 @@
 - `gateway/`  
   API Gateway 역할을 수행합니다. 외부 요청을 받아 내부 서비스로 라우팅하며, 인증, 로깅, 요청 검증 등의 공통 기능을 제공합니다.
 
+## 기술 스택
+
+- Backend: NestJS
+- 데이터베이스: MongoDB
+- 컨테이너화: Docker, Docker Compose
+
 ## 사용 방법
 
 각 앱 디렉토리 내부의 README 또는 문서를 참고하여 개별적으로 실행하거나 개발할 수 있습니다.
 
-## 기여 방법
+## 실행 방법
 
-1. 이 저장소를 fork 합니다.
-2. 새로운 브랜치를 생성합니다.
-3. 변경 사항을 커밋합니다.
-4. Pull Request를 생성합니다.
-5. docker compose up -d
-6. gateway port는 3001 번입니다.
-
----
+1. 터미널을 엽니다.
+2. 이 저장소를 clone 합니다: `git clone [저장소 URL]`
+3. `cd reward-system/` 을 입력하여 이동합니다.
+4. `docker compose up -d` 명령어를 터미널에 입력합니다.
+5. Gateway port는 3001번입니다.
+6. 내부 ip를 확인합니다. [내부 ip 확인 방법](https://itmoneytree.tistory.com/entry/%EA%B0%84%EB%8B%A8%ED%95%98%EA%B2%8C-%EB%82%B4-%EC%BB%B4%ED%93%A8%ED%84%B0-IP-%ED%99%95%EC%9D%B8-%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95windowmac)
+7. http://{내부-ip}:3001/api 를 입력하시면 Swagger UI를 확인할 수 있습니다.
 
 ## 관리자 계정
 
-email: "admin@example.com", password: "1234"
+- 이메일: "admin@example.com"
+- 비밀번호: "1234"
