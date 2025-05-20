@@ -14,8 +14,8 @@ import { EventRewardModule } from "./event-reward/event-reward.module";
   imports: [
     ConfigModule.forRoot({
       envFilePath: [
-        join(__dirname, "..", "..", "..", ".env.base"),
-        join(__dirname, "..", ".env"),
+        join(__dirname, "..", "..", "..", "..", ".env.base"),
+        join(__dirname, "..", "..", ".env"),
       ],
       isGlobal: true,
       load: [config],

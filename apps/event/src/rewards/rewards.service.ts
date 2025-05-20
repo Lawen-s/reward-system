@@ -46,6 +46,12 @@ export class RewardsService {
     return reward;
   }
 
+  async getRewardHistoryByUserId(userId: string) {
+    const rewardHistory =
+      await this.rewardHistoryService.getRewardHistoryByUserId(userId);
+    return rewardHistory;
+  }
+
   async requestReward(requestRewardDto: RequestRewardDto) {
     const { userId, eventId, rewardId } = requestRewardDto;
 

@@ -21,8 +21,8 @@ export class RewardHistoryService {
     return rewardHistory;
   }
 
-  async getRewardHistory(userId: string) {
-    const rewardHistory = await this.rewardHistoryModel.find({ userId });
+  async getRewardHistory() {
+    const rewardHistory = await this.rewardHistoryModel.find();
     return rewardHistory;
   }
 
@@ -32,5 +32,29 @@ export class RewardHistoryService {
       success: true,
     });
     return rewardHistory;
+  }
+
+  async getRewardHistoryByUserId(userId: string) {
+    const rewardHistory = await this.rewardHistoryModel
+      .find({
+        userId,
+      })
+      .populate({
+        path: "eventRewardId",
+        populate: {
+          path: "eventId",
+          select: "title",
+        },
+      });
+    return rewardHistory.map((history) => {
+      const eventReward: any = history.eventRewardId;
+      const event: any = eventReward?.eventId;
+      return {
+        success: history.success,
+        requestedAt: history.requestedAt,
+        reason: history.reason,
+        eventContent: event.title ?? null,
+      };
+    });
   }
 }

@@ -10,14 +10,9 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
+import { RequestWithUser } from "common/interface/request-user.interface";
 import { firstValueFrom } from "rxjs";
 import { RolesGuard } from "src/common/roles.guard";
-
-interface RequestWithUser extends Request {
-  user: {
-    id: string;
-  };
-}
 
 @Controller("auth")
 export class AuthController {
