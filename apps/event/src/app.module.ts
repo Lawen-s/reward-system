@@ -9,6 +9,7 @@ import { EventsModule } from "./events/events.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RewardsModule } from "./rewards/rewards.module";
 import { EventRewardModule } from "./event-reward/event-reward.module";
+import { RewardHistoryModule } from "./reward-history/reward-history.module";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { EventRewardModule } from "./event-reward/event-reward.module";
     EventsModule,
     RewardsModule,
     EventRewardModule,
+    RewardHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

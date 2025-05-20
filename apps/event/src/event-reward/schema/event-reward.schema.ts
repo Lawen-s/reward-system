@@ -16,10 +16,10 @@ export type EventRewardDocument = HydratedDocument<EventReward>;
   },
 })
 export class EventReward {
-  @Prop({ type: Types.ObjectId, ref: "Event", required: true })
+  @Prop({ type: Types.ObjectId, ref: "Events", required: true })
   eventId: Types.ObjectId;
 
-  @Prop({ type: Types.ObjectId, ref: "Reward", required: true })
+  @Prop({ type: Types.ObjectId, ref: "Rewards", required: true })
   rewardId: Types.ObjectId;
 
   @Prop({ required: true, comment: "보상 총 수량" })

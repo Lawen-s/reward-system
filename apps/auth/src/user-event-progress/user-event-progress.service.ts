@@ -35,7 +35,7 @@ export class UserEventProgressService {
     const isYesterday =
       last.getFullYear() === now.getFullYear() &&
       last.getMonth() === now.getMonth() &&
-      last.getDate() === now.getDate() - 1;
+      last.getDate() < now.getDate();
 
     if (isYesterday) {
       await this.handleLoginEvent(userId, lastLoginAt);
@@ -50,7 +50,7 @@ export class UserEventProgressService {
     );
 
     if (!userEventProgress) {
-      await this.createUserEventProgress(userId, loginEventId, 0);
+      await this.createUserEventProgress(userId, loginEventId, 1);
     } else {
       await this.updateUserEventProgress(
         userId,
