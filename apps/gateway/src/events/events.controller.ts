@@ -42,7 +42,7 @@ export class EventController {
   @ApiOperation({ summary: "이벤트 생성" })
   @ApiBody({ description: "이벤트 생성 데이터", type: CreateEventDto })
   @Post()
-  async createEvent(@Body() body: any) {
+  async createEvent(@Body() body: CreateEventDto) {
     const response = await firstValueFrom(
       this.httpService.post("http://event:3002/events", body)
     );

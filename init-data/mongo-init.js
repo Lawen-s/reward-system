@@ -15,3 +15,24 @@ db.users.insertMany([
     role: "USER",
   },
 ]);
+
+db.events.insertMany([
+  {
+    title: "로그인3회",
+    description: "로그인3회 한 유저에게 보상을 줍니다.",
+    startAt: "2025-05-20",
+    endAt: "2025-06-20",
+    category: "로그인보상",
+    requiredNumber: 3,
+  },
+]);
+
+db.rewards.insertMany([
+  {
+    title: "100포인트",
+    description: "100포인트를 줍니다.",
+    startAt: "2025-05-20",
+    endAt: "2025-06-20",
+    type: "POINT",
+  },
+]);
