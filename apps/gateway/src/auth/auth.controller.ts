@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { RequestWithUser } from "common/interface/request-user.interface";
+import { RequestWithUser } from "src/interface/request-user.interface";
 import { firstValueFrom } from "rxjs";
 import { RolesGuard } from "src/common/roles.guard";
 

@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -10,6 +10,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { RewardsModule } from "./rewards/rewards.module";
 import { EventRewardModule } from "./event-reward/event-reward.module";
 import { RewardHistoryModule } from "./reward-history/reward-history.module";
+import { HTTPLoggingMiddleware } from "./common/http-logging.middleware";
 
 @Module({
   imports: [
@@ -44,4 +45,8 @@ import { RewardHistoryModule } from "./reward-history/reward-history.module";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(HTTPLoggingMiddleware).forRoutes("*");
+  }
+}

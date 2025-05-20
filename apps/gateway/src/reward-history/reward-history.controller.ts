@@ -3,7 +3,7 @@ import { Controller, Get, Req, SetMetadata, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { RolesGuard } from "src/common/roles.guard";
 import { firstValueFrom } from "rxjs";
-import { RequestWithUser } from "common/interface/request-user.interface";
+import { RequestWithUser } from "src/interface/request-user.interface";
 
 @UseGuards(AuthGuard("user"), RolesGuard)
 @Controller("reward-history")

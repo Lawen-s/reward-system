@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UsersModule } from "./users/users.module";
@@ -9,6 +9,7 @@ import * as Joi from "joi";
 import { join } from "path";
 import { TokenModule } from "./token/token.module";
 import { UserEventProgressModule } from "./user-event-progress/user-event-progress.module";
+import { HTTPLoggingMiddleware } from "./common/http-logging.middleware";
 
 @Module({
   imports: [
@@ -47,4 +48,8 @@ import { UserEventProgressModule } from "./user-event-progress/user-event-progre
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(HTTPLoggingMiddleware).forRoutes("*");
+  }
+}
