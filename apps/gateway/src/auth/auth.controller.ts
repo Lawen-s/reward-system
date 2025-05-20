@@ -10,15 +10,24 @@ import {
   UseGuards,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
-import { RequestWithUser } from "src/interface/request-user.interface";
+import { RequestWithUser } from "src/common/interface/request-user.interface";
 import { firstValueFrom } from "rxjs";
 import { RolesGuard } from "src/common/roles.guard";
+import { ApiBody, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { LoginDto } from "./dto/login.dto";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update.dto";
 
 @Controller("auth")
+@ApiTags("auth")
 export class AuthController {
   constructor(private readonly httpService: HttpService) {}
+
   @Post("login")
-  async login(@Body() body: any) {
+  @ApiOperation({ summary: "로그인" })
+  @ApiBody({ type: LoginDto })
+  async login(@Body() body: LoginDto) {
+    console.log(body);
     const response = await firstValueFrom(
       this.httpService.post("http://localhost:3000/users/login", body)
     );
@@ -26,7 +35,9 @@ export class AuthController {
   }
 
   @Post("sign-up")
-  async signUp(@Body() body: any) {
+  @ApiOperation({ summary: "회원가입" })
+  @ApiBody({ type: CreateUserDto })
+  async signUp(@Body() body: CreateUserDto) {
     const response = await firstValueFrom(
       this.httpService.post("http://localhost:3000/users", body)
     );
@@ -35,6 +46,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard("user"))
   @Get("me")
+  @ApiOperation({ summary: "내정보 조회" })
   async me(@Req() req: RequestWithUser) {
     const response = await firstValueFrom(
       this.httpService.get("http://localhost:3000/users/me", {
@@ -47,6 +59,7 @@ export class AuthController {
   @UseGuards(AuthGuard("user"), RolesGuard)
   @SetMetadata("roles", ["ADMIN"])
   @Get("all")
+  @ApiOperation({ summary: "모든 유저 조회" })
   async all() {
     const response = await firstValueFrom(
       this.httpService.get("http://localhost:3000/users/all")
@@ -57,7 +70,9 @@ export class AuthController {
   @UseGuards(AuthGuard("user"), RolesGuard)
   @SetMetadata("roles", ["ADMIN"])
   @Patch("update-role")
-  async updateRole(@Body() body: any) {
+  @ApiOperation({ summary: "유저 권한 업데이트" })
+  @ApiBody({ type: UpdateUserDto })
+  async updateRole(@Body() body: UpdateUserDto) {
     const response = await firstValueFrom(
       this.httpService.patch("http://localhost:3000/users/update", body)
     );

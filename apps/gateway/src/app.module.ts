@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { join } from "path";
@@ -10,13 +10,14 @@ import { EventModule } from "./events/events.module";
 import { RewardsModule } from "./rewards/rewards.module";
 import { EventRewardModule } from "./event-reward/event-reward.module";
 import { RewardHistoryModule } from "./reward-history/reward-history.module";
+import { HTTPLoggingMiddleware } from "./common/http-logging.middleware";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: [
-        join(__dirname, "..", "..", "..", "..", ".env.base"),
-        join(__dirname, "..", "..", ".env"),
+        join(__dirname, "..", "..", "..", ".env.base"),
+        join(__dirname, "..", ".env"),
       ],
       isGlobal: true,
       load: [config],
@@ -38,4 +39,8 @@ import { RewardHistoryModule } from "./reward-history/reward-history.module";
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(HTTPLoggingMiddleware).forRoutes("*");
+  }
+}
