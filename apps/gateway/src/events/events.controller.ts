@@ -25,7 +25,7 @@ export class EventController {
   @ApiOperation({ summary: "이벤트 전체 조회" })
   async getEvents() {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3002/events")
+      this.httpService.get("http://event:3002/events")
     );
     return response.data;
   }
@@ -34,17 +34,17 @@ export class EventController {
   @Get(":id")
   async getEventById(@Param("id") id: string) {
     const response = await firstValueFrom(
-      this.httpService.get(`http://localhost:3002/events/${id}`)
+      this.httpService.get(`http://event:3002/events/${id}`)
     );
     return response.data;
   }
 
   @ApiOperation({ summary: "이벤트 생성" })
-  @ApiBody({ description: "이벤트 생성 데이터", type: CreateEventDto }) // DTO가 있다면 Object 대신 DTO로 교체
+  @ApiBody({ description: "이벤트 생성 데이터", type: CreateEventDto })
   @Post()
   async createEvent(@Body() body: any) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3002/events", body)
+      this.httpService.post("http://event:3002/events", body)
     );
     return response.data;
   }

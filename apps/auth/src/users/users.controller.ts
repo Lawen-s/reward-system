@@ -19,7 +19,7 @@ import { UpdateUserDto } from "./dto/update.dto";
 
 interface RequestWithUserId extends Request {
   headers: Request["headers"] & {
-    "x-user-id"?: string; // 선택적으로 정의
+    "x-user-id"?: string;
   };
 }
 

@@ -27,9 +27,8 @@ export class AuthController {
   @ApiOperation({ summary: "로그인" })
   @ApiBody({ type: LoginDto })
   async login(@Body() body: LoginDto) {
-    console.log(body);
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3000/users/login", body)
+      this.httpService.post("http://auth:3000/users/login", body)
     );
     return response.data;
   }
@@ -39,7 +38,7 @@ export class AuthController {
   @ApiBody({ type: CreateUserDto })
   async signUp(@Body() body: CreateUserDto) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3000/users", body)
+      this.httpService.post("http://auth:3000/users", body)
     );
     return response.data;
   }
@@ -49,7 +48,7 @@ export class AuthController {
   @ApiOperation({ summary: "내정보 조회" })
   async me(@Req() req: RequestWithUser) {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3000/users/me", {
+      this.httpService.get("http://auth:3000/users/me", {
         headers: { "x-user-id": req.user.id },
       })
     );
@@ -62,7 +61,7 @@ export class AuthController {
   @ApiOperation({ summary: "모든 유저 조회" })
   async all() {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3000/users/all")
+      this.httpService.get("http://auth:3000/users/all")
     );
     return response.data;
   }
@@ -74,7 +73,7 @@ export class AuthController {
   @ApiBody({ type: UpdateUserDto })
   async updateRole(@Body() body: UpdateUserDto) {
     const response = await firstValueFrom(
-      this.httpService.patch("http://localhost:3000/users/update", body)
+      this.httpService.patch("http://auth:3000/users/update", body)
     );
     return response.data;
   }

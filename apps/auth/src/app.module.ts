@@ -15,8 +15,8 @@ import { HTTPLoggingMiddleware } from "./common/http-logging.middleware";
   imports: [
     ConfigModule.forRoot({
       envFilePath: [
-        join(__dirname, "..", "..", "..", ".env.base"),
-        join(__dirname, "..", ".env"),
+        // join(__dirname, "..", ".env.base"),
+        join(__dirname, "..", ".env.local"),
       ],
       isGlobal: true,
       load: [config],

@@ -17,7 +17,7 @@ export class EventRewardController {
   })
   async createEventReward(@Body() body: any) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3002/event-rewards", body)
+      this.httpService.post("http://event:3002/event-rewards", body)
     );
     return response.data;
   }

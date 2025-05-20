@@ -17,7 +17,7 @@ export class RewardHistoryController {
   @SetMetadata("roles", ["ADMIN", "OPERATOR", "AUDITOR", "USER"])
   async getRewardHistory() {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3002/reward-history/request/all")
+      this.httpService.get("http://event:3002/reward-history/request/all")
     );
     return response.data;
   }
@@ -28,7 +28,7 @@ export class RewardHistoryController {
   async getRewardHistoryInSuccessByEventRewardId(@Req() req: RequestWithUser) {
     const userId = req.user.id;
     const response = await firstValueFrom(
-      this.httpService.get(`http://localhost:3002/reward-history/request/me`, {
+      this.httpService.get(`http://event:3002/reward-history/request/me`, {
         headers: { "x-user-id": userId },
       })
     );

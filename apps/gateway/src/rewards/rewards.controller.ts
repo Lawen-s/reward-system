@@ -34,7 +34,7 @@ export class RewardsController {
   @ApiResponse({ status: 200, description: "리워드 목록 반환" })
   async getRewards() {
     const response = await firstValueFrom(
-      this.httpService.get("http://localhost:3002/rewards")
+      this.httpService.get("http://event:3002/rewards")
     );
     return response.data;
   }
@@ -45,7 +45,7 @@ export class RewardsController {
   @ApiResponse({ status: 200, description: "리워드 상세 반환" })
   async getRewardById(@Param("id") id: string) {
     const response = await firstValueFrom(
-      this.httpService.get(`http://localhost:3002/rewards/${id}`)
+      this.httpService.get(`http://event:3002/rewards/${id}`)
     );
     return response.data;
   }
@@ -57,7 +57,7 @@ export class RewardsController {
   @ApiResponse({ status: 201, description: "리워드 생성됨" })
   async createReward(@Body() body: CreateRewardDto) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3002/rewards", body)
+      this.httpService.post("http://event:3002/rewards", body)
     );
     return response.data;
   }
@@ -69,7 +69,7 @@ export class RewardsController {
   @ApiResponse({ status: 201, description: "리워드 요청됨" })
   async requestReward(@Body() body: RequestRewardDto) {
     const response = await firstValueFrom(
-      this.httpService.post("http://localhost:3002/rewards/request", body)
+      this.httpService.post("http://event:3002/rewards/request", body)
     );
     return response.data;
   }
