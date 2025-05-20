@@ -3,11 +3,6 @@ import { RewardsService } from "./rewards.service";
 import { CreateRewardDto } from "./dto/create-reward.dto";
 import { RequestRewardDto } from "./dto/request-reward.dto";
 
-interface RequestWithUserId extends Request {
-  headers: Request["headers"] & {
-    "x-user-id"?: string;
-  };
-}
 @Controller("rewards")
 export class RewardsController {
   constructor(private readonly rewardsService: RewardsService) {}
@@ -30,11 +25,5 @@ export class RewardsController {
   @Post("request")
   requestReward(@Body() requestRewardDto: RequestRewardDto) {
     return this.rewardsService.requestReward(requestRewardDto);
-  }
-
-  @Get("request/me")
-  getRewardHistoryByUserId(@Req() req: RequestWithUserId) {
-    const userId = req.headers["x-user-id"];
-    return this.rewardsService.getRewardHistoryByUserId(userId);
   }
 }

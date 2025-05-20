@@ -9,6 +9,7 @@ import { AuthModule } from "./auth/auth.module";
 import { EventModule } from "./events/events.module";
 import { RewardsModule } from "./rewards/rewards.module";
 import { EventRewardModule } from "./event-reward/event-reward.module";
+import { RewardHistoryModule } from "./reward-history/reward-history.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { EventRewardModule } from "./event-reward/event-reward.module";
     EventModule,
     RewardsModule,
     EventRewardModule,
+    RewardHistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
