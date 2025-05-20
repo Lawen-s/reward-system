@@ -8,15 +8,15 @@ import { RolesGuard } from "src/common/roles.guard";
 
 @Controller("event-rewards")
 @ApiTags("event-rewards")
-@UseGuards(AuthGuard("jwt"), RolesGuard)
+@UseGuards(AuthGuard("user"), RolesGuard)
 @SetMetadata("roles", ["ADMIN", "OPERATOR"])
 export class EventRewardController {
   constructor(private readonly httpService: HttpService) {}
 
   @Post()
-  @ApiOperation({ summary: "이벤트 보상 생성" })
+  @ApiOperation({ summary: "이벤트와 보상을 연결합니다." })
   @ApiBody({
-    description: "이벤트 보상 생성 데이터",
+    description: "이벤트-보상 생성 데이터",
     type: CreateEventRewardDto,
   })
   async createEventReward(@Body() body: CreateEventRewardDto) {
