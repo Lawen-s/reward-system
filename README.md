@@ -1,49 +1,33 @@
-## Description
+# apps 디렉토리
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+이 디렉토리는 reward-system 프로젝트의 주요 애플리케이션들을 포함하고 있습니다. 각 하위 폴더는 독립적인 서비스 또는 모듈로 구성되어 있습니다.
 
-## Installation
+## 디렉토리 구조
 
-```bash
-$ npm install
-```
+- `auth/`  
+  인증 및 인가와 관련된 서비스가 위치합니다. 회원가입, 로그인, 토큰 발급, 권한 관리 등의 기능을 담당합니다.
 
-## Running the app
+- `event/`  
+  이벤트와 관련된 비즈니스 로직을 처리합니다. 이벤트 생성, 조회, 관리 등 이벤트 기반의 기능이 구현되어 있습니다.
 
-```bash
-# development
-$ npm run start
+- `gateway/`  
+  API Gateway 역할을 수행합니다. 외부 요청을 받아 내부 서비스로 라우팅하며, 인증, 로깅, 요청 검증 등의 공통 기능을 제공합니다.
 
-# watch mode
-$ npm run start:dev
+## 사용 방법
 
-# production mode
-$ npm run start:prod
-```
+각 앱 디렉토리 내부의 README 또는 문서를 참고하여 개별적으로 실행하거나 개발할 수 있습니다.
 
-## Test
+## 기여 방법
 
-```bash
-# unit tests
-$ npm run test
+1. 이 저장소를 fork 합니다.
+2. 새로운 브랜치를 생성합니다.
+3. 변경 사항을 커밋합니다.
+4. Pull Request를 생성합니다.
+5. docker compose up -d
+6. gateway port는 3001 번입니다.
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
-$ npm run test:cov
-```
+## 관리자 계정
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+email: "admin@example.com", password: 1234
