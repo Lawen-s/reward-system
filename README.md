@@ -30,4 +30,4 @@
 
 ## 관리자 계정
 
-email: "admin@example.com", password: 1234
+email: "admin@example.com", password: "1234"
