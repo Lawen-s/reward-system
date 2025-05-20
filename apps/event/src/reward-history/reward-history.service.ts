@@ -25,4 +25,12 @@ export class RewardHistoryService {
     const rewardHistory = await this.rewardHistoryModel.find({ userId });
     return rewardHistory;
   }
+
+  async getRewardHistoryInSuccessByEventRewardId(eventRewardId: string) {
+    const rewardHistory = await this.rewardHistoryModel.find({
+      eventRewardId,
+      success: true,
+    });
+    return rewardHistory;
+  }
 }

@@ -86,6 +86,14 @@ export class RewardsService {
       return { success: false, reason: "보상 지급 조건을 충족하지 않습니다." };
     }
 
+    const rewardHistory =
+      await this.rewardHistoryService.getRewardHistoryInSuccessByEventRewardId(
+        eventReward._id.toString()
+      );
+    if (rewardHistory.length > 0) {
+      return { success: false, reason: "이미 보상을 지급받았습니다." };
+    }
+
     await this.rewardHistoryService.create({
       userId,
       eventRewardId: eventReward._id.toString(),
